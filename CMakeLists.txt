@@ -28,6 +28,9 @@ FIND_PACKAGE(Pangolin REQUIRED)
 INCLUDE_DIRECTORIES(${Pangolin_INCLUDE_DIR})
 MESSAGE(STATUS "Found Pangolin headers in: ${Pangolin_INCLUDE_DIR}")
 
+# find libopencv
+find_package(OpenCV REQUIRED)
+
 # Sophus
 INCLUDE_DIRECTORIES( 3rdParty/Sophus/ )
 
@@ -40,7 +43,7 @@ INCLUDE_DIRECTORIES( 3rdParty/nanoflann/ )
 # tinyply
 INCLUDE_DIRECTORIES( 3rdParty/tinyply/ )
 ADD_LIBRARY( tinyply ../3rdParty/tinyply/tinyply/tinyply.cpp )
-TARGET_COMPILE_OPTIONS( tinyply PRIVATE -std=c++11 )
+TARGET_COMPILE_OPTIONS( tinyply PRIVATE -std=c++17 )
 
 ########## CUSTOM LIBRARIES ##########
 
@@ -52,8 +55,8 @@ ADD_LIBRARY( ${LIB_NAME} ../include/visualize/pcshow.cpp
                          ../include/visualize/pcshow_lines.cpp
                          ../include/visualize/pcshow_corners.cpp
                           )
-TARGET_LINK_LIBRARIES( ${LIB_NAME} ${Pangolin_LIBRARIES})
-TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${Pangolin_LIBRARIES} ${OpenCV_LIBS})
+TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++17 )
 
 ## graph
 SET( LIB_NAME graph_lib )
@@ -62,21 +65,22 @@ ADD_LIBRARY( ${LIB_NAME} ../include/graph/PlaneGraph.cpp
                          ../include/graph/ParallelPlaneGraph_clustering.cpp
                          ../include/graph/ParallelPlaneGraph_optimization.cpp
                           )
-TARGET_LINK_LIBRARIES( ${LIB_NAME} ${CERES_LIBRARIES})
-TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${CERES_LIBRARIES} ${OpenCV_LIBS})
+TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++17 )
 
 ## corners
 SET( LIB_NAME corner_lib )
 ADD_LIBRARY( ${LIB_NAME} ../include/corners/Corner.cpp
                           )
-TARGET_LINK_LIBRARIES( ${LIB_NAME} ${CERES_LIBRARIES})
-TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${CERES_LIBRARIES} ${OpenCV_LIBS})
+TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++17 )
 
 ## PPF
 SET( LIB_NAME ppf_lib )
 ADD_LIBRARY( ${LIB_NAME} ../include/PPF/PairDetector.cpp
                           )
-TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++11 )
+TARGET_COMPILE_OPTIONS( ${LIB_NAME} PRIVATE -std=c++17 )
+TARGET_LINK_LIBRARIES( ${LIB_NAME} ${OpenCV_LIBS})
 
 ########## DIRECTORIES ##########
 
