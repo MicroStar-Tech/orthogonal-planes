@@ -76,7 +76,7 @@ public:
 
     void draw()
     {
-        std::cout << "In draw with numpoints = " << num_points << " points\n";
+        //std::cout << "In draw with numpoints = " << num_points << " points\n";
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glVertexPointer(3, GL_FLOAT, stride, 0); // GL_FLOAT
         glEnableClientState(GL_VERTEX_ARRAY);
